@@ -137,7 +137,7 @@ module TimeAPI
       Time.zone = offset
       Chronic.time_class = Time.zone
       time = Chronic.parse(time).to_datetime.to_s(format)
-      time = json? ? { 'dateString' => time }.to_json : time
+      time = json? ? { 'date' => time }.to_json : time
       time = jsonp? ? callback + '(' + time + ');' : time
     end
   end
