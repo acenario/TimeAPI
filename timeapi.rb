@@ -21,7 +21,12 @@ module TimeAPI
       def z2o(zone)
         offsets = { 
     'A' => +1,
+    'ACDT' => +10.5,
+    'ACST' => +9.5,
     'ADT' => -3,
+    'AEDT' => +11,
+    'AEST' => +10,
+    'AFT' => +4.5,
     'AKDT' => -8,
     'AKST' => -9,
     'AST' => -4,
