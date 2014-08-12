@@ -108,6 +108,12 @@ module TimeAPI
     get '/favicon.ico' do
       ''
     end
+
+    get '/parse/:t/:timezone?' do
+        puts params[:timezone]
+        puts params[:t]
+        parse2(params[:timezone], params[:t])
+    end
     
     get '/:zone/?' do
       parse(params[:zone])
@@ -116,7 +122,34 @@ module TimeAPI
     get '/:zone/:time/?' do
       parse(params[:zone], params[:time])
     end
-  
+
+    def parse2(zone='UTC', time='now')
+        zone = CGI.unescape(zone)
+        zone = zone.gsub(/\.json$/, '')
+        offset = zone
+        time = CGI.unescape(time)
+        time = time \
+        .gsub(/\.json$/, '') \
+        .gsub(/^at /, '') \
+        .gsub(/(\d)h/, '\1 hours') \
+        .gsub(/(\d)min/, '\1 minutes') \
+        .gsub(/(\d)m/, '\1 minutes') \
+        .gsub(/(\d)sec/, '\1 seconds') \
+        .gsub(/(\d)s/, '\1 seconds')
+        
+        if prefers_json?
+            response.headers['Content-Type'] = 'application/json'
+        end
+        puts offset
+        Time.zone = offset
+        Chronic.time_class = Time.zone
+        puts "5"
+        time = Chronic.parse(time).to_datetime.to_s(format)
+        time = json? ? { 'date' => time }.to_json : time
+        time = jsonp? ? callback + '(' + time + ');' : time
+        time = { 'date' => time }.to_json
+    end
+
     def parse(zone='UTC', time='now')
       zone = zone.gsub(/\.json$/, '').upcase
       offset = ZoneOffset[zone] || Integer(zone)
@@ -133,7 +166,7 @@ module TimeAPI
       if prefers_json?
         response.headers['Content-Type'] = 'application/json'
       end
-      
+      puts offset
       Time.zone = offset
       Chronic.time_class = Time.zone
       time = Chronic.parse(time).to_datetime.to_s(format)
@@ -167,4 +200,6 @@ class DateTime
       strftime
     end
   end
+  
+  
 end
