@@ -1,0 +1,49 @@
+<html>
+<head>
+<title>TimeAPI</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+  <p>
+  <h3>TimeAPI</h3>
+  TimeAPI is an API to get dates/times from natural language queries based on <a href="http://chronic.rubyforge.org/">Chronic</a>.
+  </p>
+  <h3>Examples</h3>
+	<ul>
+		<li><a href="/utc/now">/utc/now</a> &rarr; Current UTC time</li>
+		<li><a href="/pdt/in+two+hours">/pdt/in+two+hours</a> &rarr; Time two hours from now in PDT</li>
+		<li><a href="/pdt/next+monday">/pdt/next+monday</a> &rarr; Datetime for next Monday in PDT</li>
+		<li><a href="/pdt/this+friday+at+noon">/pdt/this+friday+at+noon</a> &rarr; Datetime for this Friday at noon in PDT ("friday noon" works too)</li>
+		<li><a href="/pdt/7+hours+before+tomorrow+at+noon">/pdt/7+hours+before+tomorrow+at+noon</a> &rarr; I think you get the point.</li>
+	</ul>
+	<p>See <a href="http://chronic.rubyforge.org/">Chronic documentation</a> for more examples.</p>
+  <p>
+  <h3>Try</h3>
+  (use spaces, not '+', example: 'in two hours')<br/>
+   <form method="post" action="/">
+     <fieldset>
+       <label>Zone:
+         <select name="zone">
+           <option>PST</option>
+           <option>MST</option>
+           <option>CST</option>
+           <option>EST</option>
+           <option>PDT</option>
+           <option>MDT</option>
+           <option>CDT</option>
+           <option>EDT</option>
+           <option selected="selected">UTC</option>
+           <option>GMT</option>
+         </select>
+       </label>
+       <br/>
+       <label>Date/Time: <input type="text" name="dt" id="dt" style="width: 90%;" /></label>
+     </fieldset>
+     <input type="submit" value="Parse" />
+   </form>
+  </p>
+	<p>
+		by <a href="http://zh.soup.io/">Stoyan Zhekov</a>, <a href="http://chipt.com/">Matt Pennig</a>, and <a href="http://progrium.com">Jeff Lindsay</a>. <a href="http://github.com/progrium/timeapi/tree/master">Source code</a> is on GitHub. Hosted on <a href="http://heroku.com/">Heroku</a>.
+	</p>
+</body>
+</html>
